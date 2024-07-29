@@ -1,29 +1,25 @@
 import { IStorage } from '@tonconnect/sdk';
-import { createClient } from 'redis';
 
-const client = createClient({ url: process.env.REDIS_URL });
+const storage = new Map<string, string>();
 
-client.on('error', err => console.log('Redis Client Error', err));
-
-export async function initRedisClient(): Promise<void> {
-    await client.connect();
-}
 export class TonConnectStorage implements IStorage {
+    // we need to have different stores for different users
     constructor(private readonly chatId: number) {}
 
     private getKey(key: string): string {
+        // we will simply have different keys prefixes for different users
         return this.chatId.toString() + key;
     }
 
     async removeItem(key: string): Promise<void> {
-        await client.del(this.getKey(key));
+        storage.delete(this.getKey(key));
     }
 
     async setItem(key: string, value: string): Promise<void> {
-        await client.set(this.getKey(key), value);
+        storage.set(this.getKey(key), value);
     }
 
     async getItem(key: string): Promise<string | null> {
-        return (await client.get(this.getKey(key))) || null;
+        return storage.get(this.getKey(key)) || null;
     }
 }

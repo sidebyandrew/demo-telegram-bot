@@ -9,11 +9,11 @@ import {
     handleSendTXCommand,
     handleShowMyWalletCommand
 } from './commands-handlers';
-import { initRedisClient } from './ton-connect/storage';
+// import { initRedisClient } from './ton-connect/storage';
 import TelegramBot from 'node-telegram-bot-api';
 
 async function main(): Promise<void> {
-    await initRedisClient();
+    // await initRedisClient();
 
     const callbacks = {
         ...walletMenuCallbacks
