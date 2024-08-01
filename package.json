@@ -7,6 +7,7 @@
     "start:redis": "docker run -d -p 127.0.0.1:6379:6379 redis/redis-stack-server:latest",
     "start:daemon": "pm2 start --name tgbot ./dist/main.js",
     "stop:daemon": "pm2 stop tgbot && pm2 delete tgbot"
+    "pm2": "pm2 stop tgbot && pm2 delete tgbot"
   },
   "dependencies": {
     "@tonconnect/sdk": "^3.0.0-beta.1",
